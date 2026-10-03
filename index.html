@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raiesh Ghimire — Full Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --bg:#0b1220;
+  --bg-2:#0e1729;
+  --surface:#131f37;
+  --surface-2:#182544;
+  --line:#2a3a5c;
+  --line-soft:rgba(140,165,209,0.10);
+  --text:#eef2f8;
+  --text-dim:#8fa0bf;
+  --accent:#e8a33d;
+  --accent-dim:#a97a3d;
+  --teal:#5eead4;
+  --font-display:'Space Grotesk',sans-serif;
+  --font-body:'IBM Plex Sans',sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  line-height:1.65;
+  background-image:
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-size:48px 48px;
+}
+::selection{background:var(--accent);color:var(--bg);}
+
+a{color:inherit;}
+img{display:block;max-width:100%;}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+
+/* ---------- NAV ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(11,18,32,0.85);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+nav{
+  max-width:1180px;margin:0 auto;padding:18px 32px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.brand{
+  font-family:var(--font-mono);font-weight:600;font-size:15px;
+  letter-spacing:0.5px;color:var(--text);
+  display:flex;align-items:center;gap:8px;
+}
+.brand .dot{width:8px;height:8px;background:var(--accent);border-radius:50%;
+  box-shadow:0 0 8px var(--accent);}
+.navlinks{display:flex;gap:2px;list-style:none;font-family:var(--font-mono);font-size:13px;}
+.navlinks a{
+  text-decoration:none;color:var(--text-dim);padding:10px 16px;
+  transition:color .25s;position:relative;
+}
+.navlinks a::before{content:attr(data-idx) " ";color:var(--accent);}
+.navlinks a:hover{color:var(--text);}
+.navtoggle{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;}
+
+@media(max-width:860px){
+  .navlinks{
+    position:fixed;top:60px;left:0;right:0;background:var(--bg-2);
+    flex-direction:column;gap:0;border-bottom:1px solid var(--line);
+    max-height:0;overflow:hidden;transition:max-height .3s ease;
+  }
+  .navlinks.open{max-height:400px;}
+  .navlinks a{padding:16px 32px;border-top:1px solid var(--line);}
+  .navtoggle{display:block;}
+}
+
+/* ---------- SHEET LABEL (blueprint doc convention) ---------- */
+.sheet-label{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent);
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.sheet-label::after{content:'';flex:1;height:1px;background:var(--line);}
+
+section{padding:140px 0 100px;position:relative;}
+#hero{padding-top:170px;}
+
+h2.title{
+  font-family:var(--font-display);font-size:clamp(28px,4vw,42px);
+  font-weight:600;margin-bottom:50px;color:var(--text);
+}
+
+/* ---------- HERO ---------- */
+.hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:60px;align-items:center;}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;}}
+
+.hero-copy .hello{
+  font-family:var(--font-mono);color:var(--teal);font-size:14px;
+  letter-spacing:1px;margin-bottom:18px;
+}
+.hero-copy .hello .cursor{display:inline-block;width:8px;height:16px;background:var(--teal);
+  margin-left:4px;vertical-align:middle;animation:blink 1s step-end infinite;}
+@keyframes blink{50%{opacity:0;}}
+
+.hero-copy h1{
+  font-family:var(--font-display);font-size:clamp(38px,6vw,64px);
+  font-weight:700;line-height:1.05;margin-bottom:14px;
+}
+.hero-copy h1 span{color:var(--accent);}
+.hero-copy .role{
+  font-family:var(--font-mono);font-size:18px;color:var(--text-dim);margin-bottom:26px;
+}
+.hero-copy p{max-width:560px;color:var(--text-dim);font-size:16px;margin-bottom:34px;}
+
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+.btn{
+  font-family:var(--font-mono);font-size:13px;padding:13px 22px;
+  border-radius:2px;text-decoration:none;letter-spacing:0.5px;
+  transition:all .2s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary{background:var(--accent);color:#1a1002;font-weight:600;}
+.btn-primary:hover{background:#f5b559;}
+.btn-outline{border:1px solid var(--line);color:var(--text);}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+
+.social-row{display:flex;gap:18px;margin-top:34px;}
+.social-row a{color:var(--text-dim);font-size:20px;transition:color .2s;}
+.social-row a:hover{color:var(--accent);}
+
+/* schematic diagram */
+.schematic{
+  background:var(--surface);border:1px solid var(--line);border-radius:4px;
+  padding:28px 22px;position:relative;
+}
+.schematic .tag{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);
+  letter-spacing:1px;margin-bottom:18px;display:flex;justify-content:space-between;}
+.schematic svg{width:100%;height:auto;display:block;}
+.node-label{font-family:var(--font-mono);font-size:11px;fill:var(--text-dim);}
+.node-box{fill:var(--surface-2);stroke:var(--line);stroke-width:1;}
+.node-box.active{stroke:var(--accent);}
+.node-title{font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:600;fill:var(--text);}
+.flow-line{
+  stroke:var(--accent);stroke-width:1.5;fill:none;
+  stroke-dasharray:6 5;
+  animation:dash 2.5s linear infinite;
+}
+@keyframes dash{to{stroke-dashoffset:-22;}}
+
+/* ---------- SKILLS as architecture layers ---------- */
+.arch{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;}
+.arch-layer{
+  background:var(--surface);padding:28px 32px;display:grid;
+  grid-template-columns:180px 1fr;gap:24px;align-items:start;
+}
+@media(max-width:700px){.arch-layer{grid-template-columns:1fr;gap:10px;}}
+.arch-layer .layer-tag{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent);letter-spacing:1px;
+  display:flex;align-items:center;gap:10px;
+}
+.arch-layer .layer-tag i{font-size:16px;}
+.arch-layer h3{font-family:var(--font-display);font-size:19px;margin-bottom:6px;}
+.arch-layer p{color:var(--text-dim);font-size:14px;}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.chip{
+  font-family:var(--font-mono);font-size:11.5px;color:var(--text-dim);
+  border:1px solid var(--line);padding:4px 10px;border-radius:20px;
+}
+
+/* ---------- TIMELINE (experience/education) ---------- */
+.timeline{display:flex;flex-direction:column;gap:1px;}
+.tl-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:4px;
+  padding:26px 30px;position:relative;margin-bottom:18px;
+  display:grid;grid-template-columns:120px 1fr;gap:24px;
+}
+@media(max-width:700px){.tl-card{grid-template-columns:1fr;gap:10px;}}
+.tl-card .rev{
+  font-family:var(--font-mono);font-size:12px;color:var(--accent);
+}
+.tl-card .rev .range{display:block;color:var(--text-dim);margin-top:6px;font-size:12px;}
+.tl-card h3{font-family:var(--font-display);font-size:20px;margin-bottom:2px;}
+.tl-card h4{font-family:var(--font-mono);font-weight:500;font-size:13px;color:var(--teal);margin-bottom:12px;}
+.tl-card p{color:var(--text-dim);font-size:14.5px;}
+
+.edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+@media(max-width:800px){.edu-grid{grid-template-columns:1fr;}}
+.edu-card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:24px;}
+.edu-card .rev{font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-bottom:10px;}
+.edu-card h3{font-family:var(--font-display);font-size:17px;margin-bottom:6px;}
+.edu-card h4{font-family:var(--font-mono);font-size:12.5px;color:var(--text-dim);}
+
+/* ---------- PROJECTS ---------- */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;}
+.proj-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:6px;
+  overflow:hidden;transition:transform .3s, border-color .3s;
+}
+.proj-card:hover{transform:translateY(-6px);border-color:var(--accent-dim);}
+.proj-thumb{
+  height:170px;background:var(--surface-2);position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.proj-thumb img{width:100%;height:100%;object-fit:cover;}
+.proj-thumb.placeholder i{font-size:34px;color:var(--line);}
+.proj-thumb.placeholder{background:
+  repeating-linear-gradient(45deg,var(--surface-2),var(--surface-2) 10px,#152038 10px,#152038 20px);}
+.proj-body{padding:20px 22px;}
+.proj-body .eyebrow{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);margin-bottom:6px;}
+.proj-body h3{font-family:var(--font-display);font-size:18px;margin-bottom:8px;}
+.proj-body p{color:var(--text-dim);font-size:13.5px;margin-bottom:14px;}
+.proj-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+.proj-tags span{
+  font-family:var(--font-mono);font-size:10.5px;color:var(--accent);
+  border:1px solid var(--accent-dim);padding:3px 9px;border-radius:20px;
+}
+.proj-link{
+  font-family:var(--font-mono);font-size:12.5px;color:var(--teal);
+  text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+}
+.proj-link:hover{text-decoration:underline;}
+
+/* ---------- reveal on scroll ---------- */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* ---------- footer ---------- */
+footer{
+  border-top:1px solid var(--line);padding:60px 0 40px;text-align:center;
+  background:var(--bg-2);
+}
+footer h2{font-family:var(--font-display);font-size:26px;margin-bottom:10px;}
+footer p{color:var(--text-dim);font-size:14px;}
+footer .social-row{justify-content:center;margin-top:20px;}
+footer .copyright{margin-top:30px;font-family:var(--font-mono);font-size:11px;color:var(--text-dim);opacity:0.7;}
+
+@media(max-width:600px){
+  section{padding:110px 0 70px;}
+  .wrap{padding:0 20px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="brand"><span class="dot"></span>RG / PORTFOLIO</div>
+    <button class="navtoggle" id="navToggle"><i class="fas fa-bars"></i></button>
+    <ul class="navlinks" id="navLinks">
+      <li><a href="#hero" data-idx="00">Home</a></li>
+      <li><a href="#skills" data-idx="01">Stack</a></li>
+      <li><a href="#experience" data-idx="02">Experience</a></li>
+      <li><a href="#education" data-idx="03">Education</a></li>
+      <li><a href="#projects" data-idx="04">Projects</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="hello">$ whoami<span class="cursor"></span></div>
+      <h1>Raiesh <span>Ghimire.</span></h1>
+      <div class="role">Full Stack Developer — Flutter · Node.js · AWS</div>
+      <p>I build scalable, user-centric applications end to end — from clean-architecture
+      mobile apps with BLoC and MVVM, to Node.js backends and AWS infrastructure that
+      run them in production. Currently driving AI-powered workflow automation as an
+      IT Coordinator.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects <i class="fas fa-arrow-right"></i></a>
+        <a href="#experience" class="btn btn-outline">See Experience</a>
+      </div>
+      <div class="social-row">
+        <a href="https://github.com/RAIESHG" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com/in/raiesh" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:raieshg@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+
+    <div class="schematic reveal">
+      <div class="tag"><span>SHEET 00 — SYSTEM OVERVIEW</span><span>REV. 2026</span></div>
+      <svg viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg">
+        <rect class="node-box active" x="20" y="20" width="130" height="52" rx="3"/>
+        <text class="node-title" x="34" y="42">Flutter Client</text>
+        <text class="node-label" x="34" y="60">iOS · Android · Web</text>
+
+        <rect class="node-box active" x="190" y="20" width="130" height="52" rx="3"/>
+        <text class="node-title" x="204" y="42">Node.js API</text>
+        <text class="node-label" x="204" y="60">Prisma · Sequelize</text>
+
+        <rect class="node-box" x="20" y="124" width="130" height="52" rx="3"/>
+        <text class="node-title" x="34" y="146">MySQL / Firebase</text>
+        <text class="node-label" x="34" y="164">Data layer</text>
+
+        <rect class="node-box active" x="190" y="124" width="130" height="52" rx="3"/>
+        <text class="node-title" x="204" y="146">AWS Cloud</text>
+        <text class="node-label" x="204" y="164">EC2 · Lambda · DynamoDB</text>
+
+        <rect class="node-box" x="105" y="228" width="130" height="52" rx="3"/>
+        <text class="node-title" x="119" y="250">CI / Deploy</text>
+        <text class="node-label" x="119" y="268">GoDaddy · API Gateway</text>
+
+        <path class="flow-line" d="M150,46 H190"/>
+        <path class="flow-line" d="M85,72 V124"/>
+        <path class="flow-line" d="M255,72 V124"/>
+        <path class="flow-line" d="M150,150 H190"/>
+        <path class="flow-line" d="M170,176 V228"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sheet-label">Sheet 01 — Technical Stack</div>
+    <h2 class="title">What I build with</h2>
+    <div class="arch">
+      <div class="arch-layer reveal">
+        <div class="layer-tag"><i class="fas fa-mobile-screen-button"></i>CLIENT</div>
+        <div>
+          <h3>Frontend / Mobile</h3>
+          <p>Flutter across Web, Android and iOS, built with clean architecture, SOLID
+          principles, and advanced state management.</p>
+          <div class="chip-row">
+            <span class="chip">Flutter</span><span class="chip">Rx Dart</span>
+            <span class="chip">BLoC</span><span class="chip">MVVM</span><span class="chip">Cubit</span>
+          </div>
+        </div>
+      </div>
+      <div class="arch-layer reveal">
+        <div class="layer-tag"><i class="fas fa-server"></i>SERVER</div>
+        <div>
+          <h3>Backend</h3>
+          <p>Type-safe Node.js services with ORM-backed data layers, REST & GraphQL APIs,
+          and third-party integrations.</p>
+          <div class="chip-row">
+            <span class="chip">Node.js</span><span class="chip">TypeScript</span>
+            <span class="chip">Prisma</span><span class="chip">Sequelize</span>
+            <span class="chip">GraphQL</span><span class="chip">MySQL</span><span class="chip">Firebase</span>
+          </div>
+        </div>
+      </div>
+      <div class="arch-layer reveal">
+        <div class="layer-tag"><i class="fas fa-cloud"></i>INFRA</div>
+        <div>
+          <h3>Cloud & Infrastructure</h3>
+          <p>AWS-based deployments for real-time data handling, serverless workflows,
+          and production hosting.</p>
+          <div class="chip-row">
+            <span class="chip">EC2</span><span class="chip">API Gateway</span>
+            <span class="chip">Lambda</span><span class="chip">DynamoDB</span><span class="chip">Stripe</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="sheet-label">Sheet 02 — Professional Experience</div>
+    <h2 class="title">Where I've worked</h2>
+    <div class="timeline">
+      <div class="tl-card reveal">
+        <div class="rev">ROLE 01<span class="range">2022 — Present</span></div>
+        <div>
+          <h3>IT Coordinator</h3>
+          <h4>SSP Engineering &amp; Consulting</h4>
+          <p>Leading AI initiatives to automate engineering workflows across AutoCAD,
+          LISP and Python. Developed and deployed the company website and internal
+          apps, designed the Node.js backend with clean architecture, and built
+          Flutter mobile apps using Rx Dart, BLoC and MVVM. Manages team sprints,
+          GoDaddy hosting and deployments.</p>
+        </div>
+      </div>
+      <div class="tl-card reveal">
+        <div class="rev">ROLE 02<span class="range">2021 — 2023</span></div>
+        <div>
+          <h3>Full Stack Developer</h3>
+          <h4>CityGreen Systems Pty Ltd</h4>
+          <p>Designed databases and APIs for mobile/web platforms. Developed Flutter
+          apps using Rx Dart, BLoC and MVVM. Built and deployed AWS-based servers
+          for real-time data handling, integrated Rhino 3D automation, GraphQL,
+          REST APIs and Stripe, and implemented Firebase auth and dynamic links.</p>
+        </div>
+      </div>
+      <div class="tl-card reveal">
+        <div class="rev">ROLE 03<span class="range">2020 — 2021</span></div>
+        <div>
+          <h3>Mobile &amp; Web Developer</h3>
+          <h4>Siteba Group</h4>
+          <p>Built mobile and web applications in Flutter using Rx Dart, BLoC and MVVM
+          state management. Applied clean architecture and SOLID principles while
+          participating in agile workflows and daily standups.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="wrap">
+    <div class="sheet-label">Sheet 03 — Education</div>
+    <h2 class="title">Academic background</h2>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="rev">2022 — 2024</div>
+        <h3>MBA, Tech &amp; Innovation</h3>
+        <h4>Kings College</h4>
+      </div>
+      <div class="edu-card reveal">
+        <div class="rev">2018 — 2021</div>
+        <h3>Bachelors in Computing</h3>
+        <h4>Islington College</h4>
+      </div>
+      <div class="edu-card reveal">
+        <div class="rev">2015 — 2017</div>
+        <h3>A-Levels</h3>
+        <h4>Chelsea Intl College</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sheet-label">Sheet 04 — Featured Projects</div>
+    <h2 class="title">Things I've shipped</h2>
+    <div class="proj-grid">
+
+      <div class="proj-card reveal">
+        <div class="proj-thumb">
+          <img src="https://play-lh.googleusercontent.com/trCRPnlYbYpC7DyvajmdVOt68iLk9O9nwQ1NNsMNqxFRUqQbXXaxw6RxFRpXEH0Oqq_XkeJGxtvWTCHXhuwb2w=w526-h296" alt="Machhamart app screenshot">
+        </div>
+        <div class="proj-body">
+          <div class="eyebrow">Personal Project</div>
+          <h3>Machhamart</h3>
+          <p>Nepal's online fresh fish store — order, pay cash on delivery, get it delivered.</p>
+          <div class="proj-tags"><span>Flutter</span></div>
+          <a class="proj-link" href="https://play.google.com/store/apps/details?id=com.machhamart&hl=en" target="_blank">View on Play Store <i class="fas fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-thumb">
+          <img src="images/risenrun_app.jpg" alt="Rise N Run Store app screenshot" style="object-fit:contain;background:#0d1526;">
+        </div>
+        <div class="proj-body">
+          <div class="eyebrow">SSP Investment</div>
+          <h3>Rise N Run Store</h3>
+          <p>E-commerce app built for a fuel plaza & convenience store chain in Texas.</p>
+          <div class="proj-tags"><span>Flutter</span><span>Node.js</span><span>MySQL</span></div>
+          <a class="proj-link" href="https://therisenrun.com" target="_blank">Visit Website <i class="fas fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-thumb"><img src="images/avinya_web.jpg" alt="Avinya Store website screenshot"></div>
+        <div class="proj-body">
+          <div class="eyebrow">Avinya Store</div>
+          <h3>Avinya Store</h3>
+          <p>E-commerce web platform for ergonomic chairs, gaming chairs & office furniture.</p>
+          <div class="proj-tags"><span>WooCommerce</span><span>Web</span></div>
+          <a class="proj-link" href="http://avinyastore.com" target="_blank">avinyastore.com <i class="fas fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-thumb"><img src="images/gangajal_web.jpg" alt="Gangajal Minerals website screenshot"></div>
+        <div class="proj-body">
+          <div class="eyebrow">Avinya Store</div>
+          <h3>Gangajal Minerals</h3>
+          <p>Corporate site for a Shivapuri spring water bottling company, serving since 2004.</p>
+          <div class="proj-tags"><span>Web</span></div>
+          <a class="proj-link" href="http://gangajalminerals.com" target="_blank">gangajalminerals.com <i class="fas fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-thumb"><img src="images/sspeng_web.jpg" alt="SSPENG website screenshot"></div>
+        <div class="proj-body">
+          <div class="eyebrow">Avinya Store</div>
+          <h3>SSPENG Website</h3>
+          <p>Engineering consulting site covering oil/gas, commercial & municipal services.</p>
+          <div class="proj-tags"><span>Web</span></div>
+          <a class="proj-link" href="http://sspeng.com" target="_blank">sspeng.com <i class="fas fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-thumb"><img src="images/citygreen_app.jpg" alt="City Green Sensor app screenshot" style="object-fit:contain;background:#0d1526;"></div>
+        <div class="proj-body">
+          <div class="eyebrow">City Green Systems Pvt Ltd</div>
+          <h3>City Green Sensor App</h3>
+          <p>In-house sensor management application for environmental monitoring.</p>
+          <div class="proj-tags"><span>Flutter</span><span>Node.js</span><span>MySQL</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-thumb"><img src="images/siteba_app.jpg" alt="Site Ba app screenshot" style="object-fit:contain;background:#0d1526;"></div>
+        <div class="proj-body">
+          <div class="eyebrow">Site Baa Group</div>
+          <h3>Site Ba</h3>
+          <p>E-commerce application built for the Site Baa group of companies.</p>
+          <div class="proj-tags"><span>Flutter</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-thumb"><img src="images/ecounter_app.jpg" alt="E-counter app screenshot"></div>
+        <div class="proj-body">
+          <div class="eyebrow">Personal Project</div>
+          <h3>E-counter</h3>
+          <p>Online ticketing system with real-time counter management.</p>
+          <div class="proj-tags"><span>Flutter</span><span>Firebase</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-thumb"><img src="images/retrowise_web.jpg" alt="Retro Wise Portfolio website screenshot"></div>
+        <div class="proj-body">
+          <div class="eyebrow">Freelance</div>
+          <h3>Retro Wise Portfolio</h3>
+          <p>Company portfolio website delivered as a freelance engagement.</p>
+          <div class="proj-tags"><span>Flutter</span><span>Firebase</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-thumb"><img src="images/innovativeconst_web.jpg" alt="Innovative Construction website screenshot"></div>
+        <div class="proj-body">
+          <div class="eyebrow">Avinya Store</div>
+          <h3>Innovative Construction</h3>
+          <p>Construction services site for a US-based contracting company.</p>
+          <div class="proj-tags"><span>Web</span></div>
+          <a class="proj-link" href="http://innovativeconst.us" target="_blank">innovativeconst.us <i class="fas fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-thumb"><img src="images/cartsaver_web.jpg" alt="Cart Saver SaaS tool screenshot"></div>
+        <div class="proj-body">
+          <div class="eyebrow">Freelance</div>
+          <h3>Cart Saver SaaS Tool</h3>
+          <p>AI-powered sales recovery tool for abandoned cart automation.</p>
+          <div class="proj-tags"><span>SaaS</span></div>
+          <a class="proj-link" href="https://cartsave.netlify.app/" target="_blank">View Tool <i class="fas fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <h2>Let's build something.</h2>
+    <p>Open to full-stack, mobile, and cloud infrastructure work.</p>
+    <div class="social-row">
+      <a href="https://github.com/RAIESHG" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://linkedin.com/in/raiesh" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="mailto:raieshg@gmail.com"><i class="fas fa-envelope"></i></a>
+    </div>
+    <div class="copyright">&copy; <span id="year"></span> Raiesh Ghimire. Sheet 00–04, Rev. 2026.</div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
